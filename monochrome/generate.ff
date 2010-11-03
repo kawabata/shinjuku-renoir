@@ -1,0 +1,44 @@
+#!/usr/bin/fontforge -script
+
+_fontname = "shinjuku_renoir.otf"
+_importfile = "u*.svg"
+
+New()
+
+# .notdef
+Select(0x0000)
+SetWidth(1024)
+SetGlyphName(".notdef")
+
+# エンコードにUnicodeを指定
+Reencode("unicode4")
+
+# SVGのインポート
+Print("import...")
+Import(_importfile, 0)
+ 
+# ヒント情報を入れない
+SelectAll()
+DontAutoHint()
+RoundToInt()
+
+SetFontNames("Shinjuku",\
+             "Shinjuku Renoir",\
+             "Shinjuku Renoir",\
+             "Medium",\
+             "Created by hirofumix, with FontForge 2.0 (http://fontforge.sf.net)",\
+             "1.00") 
+SetTTFName(0x411, 1, "Shinjuku Renoir")
+SetTTFName(0x411, 4, "Shinjuku Renoir")
+
+# SFDファイルの保存
+Save(_fontname:t:r + ".sfd")
+Print("saved: " + _fontname:t:r + ".sfd")
+
+# OTFファイルの保存
+Generate(_fontname, "", 0x94)
+Print("generated: "+ _fontname)
+
+Close()
+
+Quit()
